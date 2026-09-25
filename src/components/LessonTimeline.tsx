@@ -38,7 +38,7 @@ export function LessonTimeline({
           })}
         </div>
         {/* Talk track */}
-        <div className="absolute inset-x-0 bottom-0 h-8 rounded-lg bg-black/30 border border-line overflow-hidden">
+        <div className="absolute inset-x-0 bottom-0 h-8 rounded-lg bg-well border border-line overflow-hidden">
           {segments.map((s) => (
             <span
               key={s.id}

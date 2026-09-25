@@ -53,7 +53,7 @@ export function TranscriptView({ segments, questions }: { segments: TranscriptSe
   return (
     <div className="glass overflow-hidden">
       <div className="flex flex-col sm:flex-row gap-3 p-3 border-b border-line">
-        <div className="flex gap-1 p-1 rounded-full bg-black/30 border border-line self-start">
+        <div className="flex gap-1 p-1 rounded-full bg-well border border-line self-start">
           {(["all", "questions", "students"] as Filter[]).map((f) => (
             <button
               key={f}
@@ -72,10 +72,10 @@ export function TranscriptView({ segments, questions }: { segments: TranscriptSe
           <div key={s.id} id={`seg-${s.id}`} className="grid grid-cols-[48px_1fr] gap-3 px-4 py-3 scroll-mt-24 target:bg-violet/10 transition-colors">
             <div className="font-mono text-[11px] text-dim pt-0.5">{formatClock(s.start - t0)}</div>
             <div className="min-w-0">
-              <div className={`text-[10px] font-mono uppercase tracking-widest mb-1 ${s.speaker === "student" ? "text-pink" : "text-cyan/80"}`}>
+              <div className={`text-[10px] font-mono uppercase tracking-widest mb-1 ${s.speaker === "student" ? "text-pink" : "text-cyan"}`}>
                 {s.speaker === "unknown" ? "speaker" : s.speaker}
               </div>
-              <p className="text-sm leading-relaxed text-text/90">{highlight(s)}</p>
+              <p className="text-sm leading-relaxed text-text">{highlight(s)}</p>
             </div>
           </div>
         ))}

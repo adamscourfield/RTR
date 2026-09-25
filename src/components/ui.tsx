@@ -26,7 +26,7 @@ export function ScoreRing({ value, size = 140, stroke = 10, label }: { value: nu
             <stop offset="100%" stopColor="var(--violet)" />
           </linearGradient>
         </defs>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={stroke} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--track)" strokeWidth={stroke} />
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -36,7 +36,7 @@ export function ScoreRing({ value, size = 140, stroke = 10, label }: { value: nu
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={`${(value / 100) * c} ${c}`}
-          style={{ filter: `drop-shadow(0 0 10px ${color})`, transition: "stroke-dasharray 1s ease" }}
+          style={{ filter: `drop-shadow(0 2px 6px color-mix(in srgb, ${color} 45%, transparent))`, transition: "stroke-dasharray 1s ease" }}
         />
       </svg>
       <div className="absolute inset-0 grid place-items-center text-center">
@@ -59,7 +59,7 @@ export function LevelBar({ score }: { score: number }) {
           key={i}
           className="h-1.5 flex-1 rounded-full"
           style={{
-            background: i <= score ? levelColor(score) : "rgba(255,255,255,0.07)",
+            background: i <= score ? levelColor(score) : "var(--track)",
             boxShadow: i <= score ? `0 0 10px -2px ${levelColor(score)}` : undefined,
           }}
         />
@@ -109,7 +109,7 @@ export function TrendChart({
     <div>
       <svg viewBox={`0 0 ${w} ${height}`} className="w-full" style={{ height }} preserveAspectRatio="none" aria-hidden>
         {[25, 50, 75].map((g) => (
-          <line key={g} x1={0} x2={w} y1={y(g)} y2={y(g)} stroke="rgba(255,255,255,0.05)" strokeDasharray="4 6" />
+          <line key={g} x1={0} x2={w} y1={y(g)} y2={y(g)} stroke="var(--track)" strokeDasharray="4 6" />
         ))}
         {series.map((s, si) => {
           const pts = s.values.map((v, i) => (v === null ? null : ([x(i), y(v)] as const))).filter(Boolean) as [number, number][];

@@ -202,8 +202,8 @@ export function LiveSession() {
       const bars = 48;
       const bw = w / bars;
       const grad = ctx2d.createLinearGradient(0, 0, w, 0);
-      grad.addColorStop(0, "#3ee6f5");
-      grad.addColorStop(1, "#9b8cff");
+      grad.addColorStop(0, "#0891b2");
+      grad.addColorStop(1, "#6d5bf5");
       ctx2d.fillStyle = grad;
       for (let i = 0; i < bars; i++) {
         const v = data[Math.floor((i / bars) * 40)] / 255;
@@ -457,8 +457,8 @@ export function LiveSession() {
             key={nudgeActive.id}
             className="rise rounded-2xl px-5 py-4 border text-sm font-medium flex items-center gap-3"
             style={{
-              borderColor: nudgeActive.tone === "warn" ? "rgba(255,200,97,0.4)" : "rgba(182,243,107,0.4)",
-              background: nudgeActive.tone === "warn" ? "rgba(255,200,97,0.08)" : "rgba(182,243,107,0.08)",
+              borderColor: nudgeActive.tone === "warn" ? "color-mix(in srgb, var(--amber) 40%, transparent)" : "color-mix(in srgb, var(--lime) 40%, transparent)",
+              background: nudgeActive.tone === "warn" ? "color-mix(in srgb, var(--amber) 8%, white)" : "color-mix(in srgb, var(--lime) 8%, white)",
               color: nudgeActive.tone === "warn" ? "var(--amber)" : "var(--lime)",
             }}
           >
@@ -516,7 +516,7 @@ export function LiveSession() {
 
         <div className="glass p-5">
           <div className="eyebrow">Question mix</div>
-          <div className="mt-3 flex h-2.5 rounded-full overflow-hidden bg-white/5">
+          <div className="mt-3 flex h-2.5 rounded-full overflow-hidden bg-track">
             {(["higher-order", "open", "closed", "rhetorical"] as QuestionType[]).map((t) => {
               const n = live.substantive.filter((q) => q.type === t).length;
               return n ? <span key={t} style={{ flex: n, background: QTYPE_COLOR[t] }} /> : null;

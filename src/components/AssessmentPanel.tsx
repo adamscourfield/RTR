@@ -90,7 +90,7 @@ export function AssessmentPanel({
                   style={{
                     height: `${(b / maxBin) * 100}%`,
                     minHeight: b ? 4 : 0,
-                    background: i * 20 >= assessment.masteryThreshold - 10 ? "var(--pink)" : "rgba(255,111,216,0.35)",
+                    background: i * 20 >= assessment.masteryThreshold - 10 ? "var(--pink)" : "color-mix(in srgb, var(--pink) 35%, transparent)",
                   }}
                 />
                 <span className="font-mono text-[10px] text-dim">{i * 20}+</span>
@@ -119,12 +119,12 @@ export function AssessmentPanel({
             <p className="mt-2 text-sm text-muted leading-relaxed">{verdict.detail}</p>
             <div className="mt-6 grid grid-cols-[auto_1fr_auto] items-center gap-3 text-xs">
               <span className="text-muted w-20">Delivery</span>
-              <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+              <div className="h-2 rounded-full bg-track overflow-hidden">
                 <div className="h-full rounded-full" style={{ width: `${overall}%`, background: scoreColor(overall) }} />
               </div>
               <span className="tabular-nums w-8 text-right">{overall}</span>
               <span className="text-muted w-20">Mastery</span>
-              <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+              <div className="h-2 rounded-full bg-track overflow-hidden">
                 <div className="h-full rounded-full bg-pink" style={{ width: `${assessment.masteryPct}%` }} />
               </div>
               <span className="tabular-nums w-8 text-right">{assessment.masteryPct}</span>

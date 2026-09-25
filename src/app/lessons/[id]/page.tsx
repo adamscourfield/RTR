@@ -103,9 +103,9 @@ export default async function LessonReport({ params }: PageProps<"/lessons/[id]"
                       <ul className="mt-3 flex flex-col gap-2">
                         {d.evidence.slice(0, 3).map((e, i) => (
                           <li key={i}>
-                            <a href={`#seg-${e.segmentId}`} className="flex gap-2 text-[13px] leading-snug rounded-lg px-3 py-2 bg-black/25 border border-line hover:border-line-strong">
+                            <a href={`#seg-${e.segmentId}`} className="flex gap-2 text-[13px] leading-snug rounded-lg px-3 py-2 bg-well border border-line hover:border-line-strong">
                               <Quote size={12} className="shrink-0 mt-0.5 text-dim" />
-                              <span className="italic text-text/85">{e.quote}</span>
+                              <span className="italic text-text">{e.quote}</span>
                             </a>
                           </li>
                         ))}
@@ -165,7 +165,7 @@ export default async function LessonReport({ params }: PageProps<"/lessons/[id]"
                       </span>
                     </span>
                     <span className="hidden sm:flex items-center gap-2">
-                      <span className="flex-1 h-1 rounded-full bg-white/5 overflow-hidden">
+                      <span className="flex-1 h-1 rounded-full bg-track overflow-hidden">
                         <span
                           className="block h-full rounded-full"
                           style={{

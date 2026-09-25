@@ -26,7 +26,7 @@ export default function RubricPage() {
             </div>
             <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {d.levels.map((l, li) => (
-                <div key={li} className="rounded-xl p-3 border border-line bg-black/20">
+                <div key={li} className="rounded-xl p-3 border border-line bg-well">
                   <div className="text-xs font-medium" style={{ color: levelColor(li + 1) }}>
                     {li + 1} · {LEVEL_NAMES[li]}
                   </div>

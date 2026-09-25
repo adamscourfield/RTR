@@ -59,7 +59,7 @@ export default async function InsightsPage() {
                 {drivers.map((d) => (
                   <div key={d.key} className="grid grid-cols-[1fr_130px_44px] items-center gap-3 text-xs">
                     <span className="truncate text-muted">{d.label}</span>
-                    <div className="relative h-2 rounded-full bg-white/5">
+                    <div className="relative h-2 rounded-full bg-track">
                       <span className="absolute left-1/2 top-[-3px] bottom-[-3px] w-px bg-line-strong" />
                       {d.r !== null && (
                         <span
@@ -104,13 +104,13 @@ function strength(r: number | null) {
 function Scatter({ points }: { points: { id: string; title: string; x: number; y: number }[] }) {
   return (
     <div className="mt-4">
-      <div className="relative aspect-[4/3] w-full rounded-xl border border-line bg-black/25 overflow-hidden">
+      <div className="relative aspect-[4/3] w-full rounded-xl border border-line bg-well overflow-hidden">
         <div className="absolute left-1/2 inset-y-0 w-px bg-line" />
         <div className="absolute top-1/2 inset-x-0 h-px bg-line" />
         <span className="absolute left-2 top-2 text-[10px] text-dim">outcomes beat delivery</span>
-        <span className="absolute right-2 top-2 text-[10px] text-lime/70">aligned · strong</span>
+        <span className="absolute right-2 top-2 text-[10px] text-lime">aligned · strong</span>
         <span className="absolute left-2 bottom-2 text-[10px] text-dim">aligned · weak</span>
-        <span className="absolute right-2 bottom-2 text-[10px] text-amber/80">didn&apos;t land</span>
+        <span className="absolute right-2 bottom-2 text-[10px] text-amber">didn&apos;t land</span>
         {points.map((p) => (
           <Link
             key={p.id}

@@ -1,21 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #05060b;
-  --bg-2: #0b0d17;
-  --panel: rgba(255, 255, 255, 0.035);
-  --panel-strong: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --text: #eef1ff;
-  --muted: #8b92b0;
-  --dim: #5b6180;
-  --cyan: #3ee6f5;
-  --violet: #9b8cff;
-  --pink: #ff6fd8;
-  --lime: #b6f36b;
-  --amber: #ffc861;
-  --red: #ff6b81;
+  --bg: #f5f6fa;
+  --bg-2: #ffffff;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: #ffffff;
+  --well: #f1f3f8;
+  --track: rgba(15, 23, 42, 0.07);
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.16);
+  --text: #0f172a;
+  --muted: #5b6477;
+  --dim: #8a93a6;
+  --cyan: #0891b2;
+  --violet: #6d5bf5;
+  --pink: #db2777;
+  --lime: #16a34a;
+  --amber: #d97706;
+  --red: #e11d48;
 }
 
 @theme inline {
@@ -23,6 +25,8 @@
   --color-bg-2: var(--bg-2);
   --color-panel: var(--panel);
   --color-panel-strong: var(--panel-strong);
+  --color-well: var(--well);
+  --color-track: var(--track);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-text: var(--text);
@@ -39,7 +43,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -47,8 +51,8 @@ body {
   color: var(--text);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   background-image:
-    radial-gradient(1200px 600px at 85% -10%, rgba(155, 140, 255, 0.14), transparent 60%),
-    radial-gradient(900px 500px at -10% 20%, rgba(62, 230, 245, 0.09), transparent 60%);
+    radial-gradient(1200px 600px at 85% -10%, rgba(109, 91, 245, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(8, 145, 178, 0.08), transparent 60%);
   background-attachment: fixed;
 }
 
@@ -59,8 +63,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
   z-index: 0;
@@ -72,7 +76,7 @@ body::before {
     border: 1px solid var(--line);
     border-radius: 20px;
     backdrop-filter: blur(18px);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px -30px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 16px 40px -24px rgba(15, 23, 42, 0.18);
   }
   .glow-text {
     background: linear-gradient(90deg, var(--cyan), var(--violet) 55%, var(--pink));
@@ -108,12 +112,12 @@ body::before {
     pointer-events: none;
   }
   .btn-primary {
-    color: #05060b;
+    color: #ffffff;
     background: linear-gradient(90deg, var(--cyan), var(--violet));
-    box-shadow: 0 8px 30px -8px rgba(62, 230, 245, 0.55);
+    box-shadow: 0 8px 24px -10px rgba(8, 145, 178, 0.6);
   }
   .btn-primary:hover {
-    box-shadow: 0 10px 40px -6px rgba(155, 140, 255, 0.7);
+    box-shadow: 0 10px 30px -8px rgba(109, 91, 245, 0.6);
   }
   .btn-ghost {
     color: var(--text);
@@ -122,14 +126,14 @@ body::before {
   }
   .btn-ghost:hover {
     border-color: var(--line-strong);
-    background: rgba(255, 255, 255, 0.09);
+    background: var(--well);
   }
   .field {
     width: 100%;
     height: 44px;
     padding: 0 14px;
     border-radius: 12px;
-    background: rgba(0, 0, 0, 0.35);
+    background: #ffffff;
     border: 1px solid var(--line);
     color: var(--text);
     font-size: 14px;
@@ -143,7 +147,7 @@ body::before {
   }
   .field:focus {
     border-color: var(--cyan);
-    box-shadow: 0 0 0 3px rgba(62, 230, 245, 0.15);
+    box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
   }
   .chip {
     display: inline-flex;
@@ -183,7 +187,7 @@ body::before {
 }
 
 ::selection {
-  background: rgba(155, 140, 255, 0.35);
+  background: rgba(109, 91, 245, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {

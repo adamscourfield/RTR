@@ -31,7 +31,7 @@ export function LessonRow({ lesson }: { lesson: LessonSummary }) {
       <div className="hidden sm:flex items-center gap-2">
         {lesson.source === "demo" && <span className="chip">demo</span>}
         {lesson.assessment ? (
-          <span className="chip" style={{ color: "var(--pink)", borderColor: "rgba(255,111,216,0.3)" }}>
+          <span className="chip" style={{ color: "var(--pink)", borderColor: "color-mix(in srgb, var(--pink) 35%, transparent)" }}>
             {lesson.assessment.masteryPct}% mastery
           </span>
         ) : (
