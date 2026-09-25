@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #05060b;
+  --bg-2: #0b0d17;
+  --panel: rgba(255, 255, 255, 0.035);
+  --panel-strong: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --text: #eef1ff;
+  --muted: #8b92b0;
+  --dim: #5b6180;
+  --cyan: #3ee6f5;
+  --violet: #9b8cff;
+  --pink: #ff6fd8;
+  --lime: #b6f36b;
+  --amber: #ffc861;
+  --red: #ff6b81;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-panel-strong: var(--panel-strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-dim: var(--dim);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-pink: var(--pink);
+  --color-lime: var(--lime);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(155, 140, 255, 0.14), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(62, 230, 245, 0.09), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Subtle grid behind everything for the "instrument panel" feel. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+  z-index: 0;
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 60px -30px rgba(0, 0, 0, 0.8);
+  }
+  .glow-text {
+    background: linear-gradient(90deg, var(--cyan), var(--violet) 55%, var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .eyebrow {
+    font-family: var(--font-geist-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .btn-primary {
+    color: #05060b;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    box-shadow: 0 8px 30px -8px rgba(62, 230, 245, 0.55);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 10px 40px -6px rgba(155, 140, 255, 0.7);
+  }
+  .btn-ghost {
+    color: var(--text);
+    background: var(--panel-strong);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover {
+    border-color: var(--line-strong);
+    background: rgba(255, 255, 255, 0.09);
+  }
+  .field {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea.field {
+    height: auto;
+    padding: 12px 14px;
+    line-height: 1.5;
+  }
+  .field:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(62, 230, 245, 0.15);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid var(--red);
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+::selection {
+  background: rgba(155, 140, 255, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .pulse-ring::after { animation: none; }
+}
