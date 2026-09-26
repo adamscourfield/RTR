@@ -73,7 +73,7 @@ async function poll(id: string): Promise<TranscriptJob> {
  * the teacher: in a whole-class lesson the teacher reliably has the most total talk time.
  * Falls back to "unknown" when there's only one detected speaker (no real diarization).
  */
-function toSegments(utterances: Utterance[]): TranscriptSegment[] {
+export function toSegments(utterances: Utterance[]): TranscriptSegment[] {
   const talkTime = new Map<string, number>();
   for (const u of utterances) talkTime.set(u.speaker, (talkTime.get(u.speaker) ?? 0) + (u.end - u.start));
   const ranked = [...talkTime.entries()].sort((a, b) => b[1] - a[1]);
