@@ -78,6 +78,9 @@ export function LiveSession() {
   const clockRef = useRef(0);
   const pendingStartRef = useRef<number | null>(null);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
+  const mediaRecRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const [transcribing, setTranscribing] = useState(false);
   const liveRef = useRef(false);
   const streamRef = useRef<MediaStream | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -260,6 +263,19 @@ export function LiveSession() {
       setClock(clockRef.current);
     }, 250);
     startVisualiser(streamRef.current);
+    audioChunksRef.current = [];
+    try {
+      const mimeType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((t) => MediaRecorder.isTypeSupported(t));
+      const mediaRec = new MediaRecorder(streamRef.current, mimeType ? { mimeType } : undefined);
+      mediaRec.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
+      mediaRec.start(1000);
+      mediaRecRef.current = mediaRec;
+    } catch {
+      // Recording the audio itself is a bonus (enables accurate diarized transcription on
+      // stop); if it fails, live coaching still works off the browser's own speech engine.
+    }
 
     const rec = new Rec();
     rec.continuous = true;
@@ -330,6 +346,8 @@ export function LiveSession() {
     liveRef.current = false;
     recRef.current?.stop();
     recRef.current = null;
+    if (mediaRecRef.current && mediaRecRef.current.state !== "inactive") mediaRecRef.current.stop();
+    mediaRecRef.current = null;
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
     cancelAnimationFrame(rafRef.current);
@@ -345,16 +363,40 @@ export function LiveSession() {
     // Flush any in-flight utterance.
     const tail = interimRef.current.trim();
     const tailStart = pendingStartRef.current;
+    const chunks = audioChunksRef.current;
+    const mimeType = mediaRecRef.current?.mimeType;
     teardown();
     if (tail && tailStart !== null) pushSegment(tail, tailStart, clockRef.current);
     showInterim("");
-    const finalSegments = segsRef.current;
+    let finalSegments = segsRef.current;
     if (!finalSegments.length) {
       savingRef.current = false;
       setError("Nothing was transcribed. Check the microphone and try again.");
       setPhase("setup");
       return;
     }
+
+    // The browser's live speech recognition is good enough to coach from in the moment, but
+    // it can't tell teacher from student. If we recorded the audio, re-transcribe it properly
+    // (with speaker diarization) for the saved lesson — falling back to the live transcript
+    // if that isn't configured or fails, so a missing API key never blocks saving a lesson.
+    if (chunks.length && mode === "mic") {
+      setTranscribing(true);
+      try {
+        const blob = new Blob(chunks, { type: mimeType || "audio/webm" });
+        const form = new FormData();
+        form.append("audio", blob, "lesson.webm");
+        const tres = await fetch("/api/transcribe", { method: "POST", body: form });
+        if (tres.ok) {
+          const { segments: diarized } = await tres.json();
+          if (diarized?.length) finalSegments = diarized;
+        }
+      } catch {
+        // Keep the live-transcribed segments.
+      }
+      setTranscribing(false);
+    }
+
     const meta = metaRef.current;
     setPhase("saving");
     const res = await fetch("/api/lessons", {
@@ -443,8 +485,8 @@ export function LiveSession() {
             <div className="text-3xl font-mono font-medium tabular-nums">{formatClock(clock)}</div>
           </div>
           <canvas ref={canvasRef} className="hidden sm:block h-12 flex-1 max-w-xs" />
-          <button className="btn btn-ghost !border-red/40 !text-red" onClick={stop} disabled={phase === "saving"}>
-            {phase === "saving" ? "Analysing…" : (
+          <button className="btn btn-ghost !border-red/40 !text-red" onClick={stop} disabled={phase === "saving" || transcribing}>
+            {transcribing ? "Transcribing…" : phase === "saving" ? "Analysing…" : (
               <>
                 <Square size={14} fill="currentColor" /> End &amp; analyse
               </>
